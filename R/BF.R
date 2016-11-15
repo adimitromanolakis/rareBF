@@ -33,12 +33,12 @@
 #'
 #' v = runif(Nsamples * Nsites) > 0.3
 #' variants = matrix(v, ncol=Nsamples, nrow=Nsites)
-#' BF(variants,pheno,verbose=T)
+#' BF(variants,pheno,verbose=TRUE)
 #'
 #' @seealso \code{\link{BF}}
 #' 
 #' @export
-BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, verbose = F) {
+BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, verbose = FALSE) {
   
   if(! ( class(pheno) == "numeric" || class(pheno) == "integer" ) ) {
     stop("pheno must be a numeric vector")

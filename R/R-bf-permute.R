@@ -95,7 +95,8 @@ run_BF = function(snps, group12, method, permuteSamples, KK,  verbose = F) {
   if(verbose) cat("#### Dataset:\n")
   if(verbose) print(dataset)
     
-  if(verbose) cat("KK=",KK);
+  if(verbose) cat("KK=",KK, "\n");
+  if(verbose) cat("params = ", Eta.par.reg )
   
   
   BF.mix.eta = NA

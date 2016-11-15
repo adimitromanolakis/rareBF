@@ -144,6 +144,90 @@ test4 = function()  {
 }
 
 
+test5 = function()  {
+  
+  source("R/BF.R")
+  source("R/BF-package.r")
+  source("R/R-bf-permute.R")
+  source("R/BF_reg_eta_miss_15Sep2016_mod.R")
+  
+  
+  set.seed(10)
+  
+  Nsamples = 550
+  Nsites = 5500
+  
+  pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+  
+  
+  v = round ( rexp(Nsamples * Nsites, rate=0.1) / 50 ) 
+  variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+  
+  
+  
+  s = which(pheno == 1)
+  for(i in s) variants[,i] = round ( rexp( Nsites, rate=0.103) / 50 )   
+  
+  t1=(apply(variants[,pheno==0],1,sum))
+  t2=(apply(variants[,pheno==1],1,sum))
+  cat(mean(t1),mean(t2),"\n")
+  
+  
+  t1 = system.time( r <- BF(variants,pheno,verbose=F, method = "reg_eta_miss") )
+  t1  
+  r
+  cat(r," ", 162654.3, "\n");
+  
+  #expected 162654.3
+}
+
+
+
+test6 = function()  {
+  
+  source("R/BF.R")
+  source("R/BF-package.r")
+  source("R/R-bf-permute.R")
+  source("R/BF_reg_eta_miss_15Sep2016_mod.R")
+  
+  
+  
+  set.seed(10)
+  
+  Nsamples = 550
+  Nsites = 5500
+  
+  pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+  
+  
+  v = round ( rexp(Nsamples * Nsites, rate=0.1) / 50 ) 
+  variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+  
+  
+  
+  s = which(pheno == 1)
+  for(i in s) variants[,i] = round ( rexp( Nsites, rate=0.103) / 50 )   
+  
+  
+  for(i in 1:Nsamples) {
+    variants[ which( runif(Nsites) > 0.9 )    ,i] = NA
+  }
+  
+  
+  t1=(apply(variants[,pheno==0],1,sum))
+  t2=(apply(variants[,pheno==1],1,sum))
+  cat(mean(t1,na.rm=T),mean(t2,na.rm=T),"\n")
+  
+  
+  t1 = system.time( r <- BF(variants,pheno,verbose=T, method = "reg_eta_miss") )
+  t1  
+  r
+  cat(r," ", 106242, "\n");
+  
+  #expected 162654.3
+}
+
+
 
 run_tests = function() {
   test_null()
@@ -153,4 +237,4 @@ run_tests = function() {
   
 }
 
-#run_tests()
+# run_tests()
