@@ -15,10 +15,10 @@
 #'  Documentation for function BF.
 #'  The following methods are available:
 ##' \itemize{
-##'  \item{ \code{reg_eta_miss} : }{--}
-##'  \item{ \code{reg_eta} : }{--}
+##'  \item{ \code{reg_eta_miss} : }{Regular prior, able to handle missing data}
+##'  \item{ \code{mix_eta} : }{Mixed prior}
 ##' }
-#'  \url{http://www.r-project.org}
+#'  More information is available at the following link: \url{http://www.r-project.org}
 #' 
 #' 
 #' 
@@ -53,14 +53,14 @@ BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, verbose
     stop("pheno and variants specify different number of individuals")  
   }
 
-  returnvalue = NA
-  returnvalue = run_BF(variants, pheno, method, F, KK, verbose)
-  
-  available_methods = c("reg_eta_miss")
+  available_methods = c("reg_eta_miss", "mix_eta")
   
   if(!(method %in% available_methods)) {
     stop("method argument not recognized")  
   }  
+  
+  returnvalue = NA
+  returnvalue = run_BF(variants, pheno, method, F, KK, verbose)
   
   
   return(returnvalue)

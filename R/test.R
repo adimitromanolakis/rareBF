@@ -1,5 +1,39 @@
 
 
+#' Example 1 for Bayes factor methods
+#'
+#' @return BF
+#' @export
+example1 = function() {
+  
+  
+  set.seed(101)
+  
+  Nsamples = 40
+  Nsites = 50
+  
+  pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+  
+  v = round ( rexp(Nsamples * Nsites, rate=0.1) /50 ) 
+  variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+  BF(variants,pheno,verbose=F)
+  
+  # Test for resampling pheno
+  
+  ns = sample(1:Nsamples)
+  
+  pheno = pheno[ns]
+  variants = variants[,ns]
+  ret = BF(variants,pheno,verbose=T)
+  
+  # expected  1.002853
+  
+  cat(ret," ", 1.002853, "\n");
+  
+  
+}
+
+
 test_null = function()  {
   
 source("R/BF.R")
@@ -226,6 +260,54 @@ test6 = function()  {
   
   #expected 162654.3
 }
+
+
+
+
+test_mix_eta_1 = function()  {
+  
+  source("R/BF.R")
+  source("R/BF-package.r")
+  source("R/R-bf-permute.R")
+  source("R/BF_reg_eta_miss_15Sep2016_mod.R")
+  source("R/BF_mix_eta_25Apr2016.R")
+  
+  
+  set.seed(10)
+  
+  Nsamples = 550
+  Nsites = 5500
+  
+  pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+  
+  
+  v = round ( rexp(Nsamples * Nsites, rate=0.1) / 50 ) 
+  variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+  
+  
+  
+  s = which(pheno == 1)
+  for(i in s) variants[,i] = round ( rexp( Nsites, rate=0.103) / 50 )   
+  
+  
+  for(i in 1:Nsamples) {
+    variants[ which( runif(Nsites) > 0.9 )    ,i] = NA
+  }
+  
+  
+  t1=(apply(variants[,pheno==0],1,sum))
+  t2=(apply(variants[,pheno==1],1,sum))
+  cat(mean(t1,na.rm=T),mean(t2,na.rm=T),"\n")
+  
+  
+  t1 = system.time( r <- BF(variants,pheno,verbose=T, method = "mix_eta") )
+  t1  
+  r
+  cat(r," ", 106242, "\n");
+  
+  #expected 162654.3
+}
+
 
 
 

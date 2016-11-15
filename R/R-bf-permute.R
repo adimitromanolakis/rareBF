@@ -1,5 +1,6 @@
 
-print("Loaded R-bf-permute")
+#print("Loaded R-bf-permute")
+#library(LearnBayes)
 
 
 
@@ -8,7 +9,7 @@ print("Loaded R-bf-permute")
 #' @param snps Variants
 #'
 #' @return BF
-run_BF = function(snps, group12, method, permuteSamples, KK,  verbose = F) {
+run_BF = function(snps, pheno, method, permuteSamples, KK,  verbose = F) {
   
   
   # Hyper parameters
@@ -24,7 +25,7 @@ run_BF = function(snps, group12, method, permuteSamples, KK,  verbose = F) {
   
   
   # snps : genotypes coded as NA/0/1/2
-  # group12 : phenotypes
+  # pheno : phenotypes
   
   # Recode as 0: no alleles 
   
@@ -34,9 +35,9 @@ run_BF = function(snps, group12, method, permuteSamples, KK,  verbose = F) {
   
   variants_per_individual = apply(snps,2, function(x) sum(x,na.rm=T))
   
-  if(verbose) cat("nvarlength = ", length(variants_per_individual), "pheno length = ", length(group12), "\n")
+  if(verbose) cat("nvarlength = ", length(variants_per_individual), "pheno length = ", length(pheno), "\n")
   
-  input_data = data.frame(variants=variants_per_individual, pheno = group12 )
+  input_data = data.frame(variants=variants_per_individual, pheno = pheno )
   
   if(permuteSamples > 0) input_data$pheno = sample(input_data$pheno)
   
@@ -96,25 +97,27 @@ run_BF = function(snps, group12, method, permuteSamples, KK,  verbose = F) {
   if(verbose) print(dataset)
     
   if(verbose) cat("KK=",KK, "\n");
-  if(verbose) cat("params = ", Eta.par.reg )
+  if(verbose) cat("params = ", Eta.par.reg , "\n" )
   
   
-  BF.mix.eta = NA
+  BayesFactor = NA
   
   
   if(method == "reg_eta_miss") {
-    BF.mix.eta = try( BF_reg_eta_miss(dataset, Eta.par.reg, KK) )
+    BayesFactor = try( BF_reg_eta_miss(dataset, Eta.par.reg, KK) )
   }
   
-  
+  if(method == "mix_eta") {
+    BayesFactor = try( BF_mix_eta(dataset, Eta.par.reg, KK) )
+  }
  
   
-# BF.mix.eta = 1
+  # BF.mix.eta = 1
   
-  if( "try-error" %in% class(BF.mix.eta) ) BF.mix.eta = NA
+  if( "try-error" %in% class(BayesFactor) ) BayesFactor = NA
   
   
-  return(BF.mix.eta)
+  return(BayesFactor)
   
   
 }

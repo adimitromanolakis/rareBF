@@ -1,7 +1,6 @@
 
 
 # revised based on BF_25Feb216.R
-library(LearnBayes)
 
 
 

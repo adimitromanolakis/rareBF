@@ -1,5 +1,14 @@
-#' BF.
+
+#' Methods for rare variant association.
+#' 
 #'
-#' @name BF
-#' @docType package
+#' This packages implements the following methods for rare variant association:
+#' reg_eta_miss, mix_eta
+"_PACKAGE"
+
+
+
+#' @import LearnBayes
 NULL
+
+
