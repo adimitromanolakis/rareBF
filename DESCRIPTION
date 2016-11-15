@@ -1,9 +1,9 @@
 Package: BF
 Type: Package
 Title: Bayesian Models for Rare Variant Association Analysis
-Version: 1.00
+Version: 1.01
 Date: 2016-11-01
-Author: Laurent
+Author: Laurent Briollais, Jingxiong Xu 
 Maintainer: Apostolos Dimitromanolakis <apostol@cs.toronto.edu>
 Description: Bayes factor models for bayesian analysis
 License: GPL (>= 2)
@@ -16,3 +16,5 @@ Imports:
 Encoding: latin1
 NeedsCompilation: no
 RoxygenNote: 5.0.1
+Suggests: knitr
+VignetteBuilder: knitr

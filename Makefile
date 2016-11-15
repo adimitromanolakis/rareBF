@@ -3,6 +3,9 @@
 default:
 	Rscript  -e 'library(devtools); build(); document(); '
 
+doc:
+	Rscript  -e 'library(devtools); document(); '
+
 
 check:
 	R CMD check .
