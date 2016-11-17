@@ -1,8 +1,10 @@
 # rareBF
 
 
-R package for rare variant association.
+R package for Bayesian Models for Rare Variant Association Analysis.
 
+#### Author: Laurent Briollais, Jingxiong Xu 
+#### Maintainer: Apostolos Dimitromanolakis
 
 ## Installation
 
