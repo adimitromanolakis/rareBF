@@ -22,7 +22,8 @@ The following example demonstrates simulating data from the null model:
 
 ```R
   library(BF)
-
+  
+  set.seed(101)
   Nsamples = 40
   Nsites = 50
   
@@ -30,18 +31,10 @@ The following example demonstrates simulating data from the null model:
   
   v = round ( rexp(Nsamples * Nsites, rate=0.1) /50 ) 
   variants = matrix(v, ncol=Nsamples, nrow=Nsites)
-  BF(variants,pheno,verbose=F)
-  
-  # Test for resampling pheno
-  
-  ns = sample(1:Nsamples)
-  
-  pheno = pheno[ns]
-  variants = variants[,ns]
-  ret = BF(variants,pheno,verbose=T)
-  
+  bf = BF(variants,pheno,verbose=F)
+ 
   # expected  1.002853
   
-  cat(ret," ", 1.002853, "\n");
+  cat(bf," ", 1.002853, "\n");
 
 ```
