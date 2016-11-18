@@ -4,7 +4,7 @@
 
 
 
-BF_reg_eta_miss = function(Data,par.set,KK){
+BF_reg_eta_miss = function(Data,par.set,KK) {
   
   eta.star.reg = par.set[1] 
   k.star.reg = par.set[2] 
@@ -98,7 +98,7 @@ BF_reg_eta_miss = function(Data,par.set,KK){
     
     return(exp(logm_case + logm_control - logm_total))
   }
-  
+
   return(BF_function(KK,Data))
 }
 

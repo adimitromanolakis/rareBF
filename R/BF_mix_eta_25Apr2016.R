@@ -20,9 +20,11 @@ library(LearnBayes)
 
 
 
-BF_mix_eta = function(Data,par.set) {
+BF_mix_eta = function(Data, par.set, nsites) {
 
-  stop("NEED TO FIX genotype order")
+  #stop("NEED TO FIX genotype order")
+  
+  cat("nsites=", nsites, "\n")
   
   eta.star = par.set[1] 
   k.star = par.set[2] 
@@ -33,9 +35,9 @@ BF_mix_eta = function(Data,par.set) {
   w0.par = par.set[7] 
   K = par.set[8] 
   
-  bfexch_case = function(theta,datapar){
+  bfexch_case = function(theta,datapar) {
     x = sort(datapar$data)
-    n = length(causal.pool)
+    n = nsites
     m0 = datapar$m0
     j0 = datapar$j0
     eta.pos = exp(theta)/(1+exp(theta))
@@ -44,17 +46,21 @@ BF_mix_eta = function(Data,par.set) {
     beta.star = k1.star*(1-eta1.star)
     z= 0*theta
     z = z + (m0-j0)*lbeta(K*eta.pos,K*(1-eta.pos)+n) - (N-j0)*lbeta(K*eta.pos,K*(1-eta.pos)) 
+    
+    
     for(s in (m0+1):N)
       z=z+lbeta(K*eta.pos+x[s],K*(1-eta.pos)+n-x[s])
+    
+    
     z=z+log(eta.pos*(1-eta.pos))
     z = z+dbeta(eta.pos,alpha.star,beta.star,log=TRUE)
     return(z)
     #return(c(m0,N))
   }
   
-  bfexch_control = function(theta,datapar){
+  bfexch_control = function(theta,datapar) {
     x = sort(datapar$data)
-    n = length(causal.pool)
+    n = nsites
     m0 = datapar$m0
     j0 = datapar$j0
     eta.pos = exp(theta)/(1+exp(theta))
@@ -70,9 +76,9 @@ BF_mix_eta = function(Data,par.set) {
     return(z)
   }
   
-  bfexch_total = function(theta,datapar){
+  bfexch_total = function(theta,datapar) {
     x = sort(datapar$data)
-    n = length(causal.pool)
+    n = nsites
     m0 = datapar$m0
     j0 = datapar$j0
     eta.pos = exp(theta)/(1+exp(theta))
@@ -89,7 +95,7 @@ BF_mix_eta = function(Data,par.set) {
   }
   
   
-  T.const = function(m.pos,DATA){
+  T.const = function(m.pos,DATA) {
     t.const = rep(NA,m.pos+1)
     for(l in 0:m.pos){
       
@@ -98,7 +104,7 @@ BF_mix_eta = function(Data,par.set) {
     return(mean(t.const))
   }
   
-  sum_function = function(m.pos,type,T_total,DATA){
+  sum_function = function(m.pos,type,T_total,DATA) {
     S = 0
     if(type=="total"){
       for(l in 0:m.pos){
@@ -117,7 +123,7 @@ BF_mix_eta = function(Data,par.set) {
     return(S)
   }
   
-  I_fun = function(mm.pos,j.pos,type,dataset){
+  I_fun = function(mm.pos,j.pos,type,dataset) {
     if(type == "total")
       logm = laplace(bfexch_total,0,list(data=dataset[,1],m0 = mm.pos,j0 = j.pos))$int
     else if(type == "case")
@@ -126,10 +132,13 @@ BF_mix_eta = function(Data,par.set) {
     return(logm)
   }
   
-  log_BF = function(obs.data){
+  log_BF = function(obs.data) {
     
-    obs.data1 = obs.data[1:sum(obs.data[,2]),]
-    obs.data0 = obs.data[-(1:sum(obs.data[,2])),]
+    cases = which(obs.data[,2] == 1)
+    controls = which(obs.data[,2] == 0)
+    
+    obs.data1 = obs.data[ cases, ]
+    obs.data0 = obs.data[ controls, ]
     
     m.total = sum(obs.data[,1]==0)
     m.case = sum(obs.data1[,1]==0)

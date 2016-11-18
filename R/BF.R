@@ -12,7 +12,7 @@
 #' @return Bayes Factor (numeric)
 #' 
 #' @details
-#'  Documentation for function BF.
+#'  nvariants contains a matrix of variants per site. Missing data are coded as NA. 
 #'  The following methods are available:
 ##' \itemize{
 ##'  \item{ \code{reg_eta_miss} : }{Regular prior, able to handle missing data}
@@ -60,6 +60,8 @@ BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, verbose
   }  
   
   returnvalue = NA
+  
+  #variants = variants^1
   returnvalue = run_BF(variants, pheno, method, F, KK, verbose)
   
   

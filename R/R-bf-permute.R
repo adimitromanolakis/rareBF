@@ -11,7 +11,6 @@
 #' @return BF
 run_BF = function(snps, pheno, method, permuteSamples, KK,  verbose = F) {
   
-  
   # Hyper parameters
   # eta.star, k.star, eta1.star, k1.star, eta0.star, k0.star,w0.par,k.par
   Eta.par = c(8.007217e-03, 2.348949e+04, 9.528792e-03, 2.319012e+04, 8.007217e-03, 2.348949e+04, 7.150010e-01, 1.225571e+04)
@@ -27,39 +26,41 @@ run_BF = function(snps, pheno, method, permuteSamples, KK,  verbose = F) {
   # snps : genotypes coded as NA/0/1/2
   # pheno : phenotypes
   
+  
+  
   # Recode as 0: no alleles 
-  
-  
-  snps = ( snps > 0 ) ^ 1
+  #snps = ( snps > 0 ) ^ 1     
   causal.pool = 1:nrow(snps)
   
-  variants_per_individual = apply(snps,2, function(x) sum(x,na.rm=T))
+  variants_per_individual = apply(snps,2, function(x) sum(x>0,na.rm=T))
+  
+  # Number of non missing sites per individual
+  non_missing_sites = apply(snps,2,function(x) sum(!is.na(x)))
+  
   
   if(verbose) cat("nvarlength = ", length(variants_per_individual), "pheno length = ", length(pheno), "\n")
   
   input_data = data.frame(variants=variants_per_individual, pheno = pheno )
   
   if(permuteSamples > 0) input_data$pheno = sample(input_data$pheno)
-  
+
   
   if(1) {   ## computation of Eta.par per gene
     
-    # Number of non missing sites per individual
-    non_missing_sites = apply(snps,2,function(x) sum(!is.na(x)))
-    
+
     # Vector of invididual p.hat
-    input_data$p.hat = input_data$variants / non_missing_sites 
+    input_data$p.hat = variants_per_individual / non_missing_sites 
     
     #input_data$cc = input_data$pheno
     #input_data$geno_sum = input_data$variants
     
     
-    p0.hat = mean(input_data$p.hat[which(input_data$pheno==0)])
-    p1.hat = mean(input_data$p.hat[which(input_data$pheno==1)])
+    p0.hat = mean(input_data$p.hat[which(pheno==0)])
+    p1.hat = mean(input_data$p.hat[which(pheno==1)])
     Eta.par.reg[1] = Eta.par.reg[5] = p0.hat
     Eta.par.reg[3] = p1.hat
     
-    new.geno_nonzero = input_data[which(input_data$variants > 0),]
+    new.geno_nonzero = input_data[which(variants_per_individual > 0),]
     
     case_nonzero.index = which(new.geno_nonzero$pheno == 1)
     control_nonzero.index = which(new.geno_nonzero$pheno == 0)
@@ -108,7 +109,7 @@ run_BF = function(snps, pheno, method, permuteSamples, KK,  verbose = F) {
   }
   
   if(method == "mix_eta") {
-    BayesFactor = try( BF_mix_eta(dataset, Eta.par.reg, KK) )
+    BayesFactor = try( BF_mix_eta(dataset, Eta.par,  nrow(snps)  ) )
   }
  
   
