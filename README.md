@@ -31,6 +31,8 @@ The following example demonstrates simulating data from the null model:
   
   v = round ( rexp(Nsamples * Nsites, rate=0.1) /50 ) 
   variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+  
+  
   bf = BF(variants, pheno, method="reg_eta_miss", verbose=F)
  
   # expected  1.002853
