@@ -38,3 +38,38 @@ The following example demonstrates simulating data from the null model:
   cat(bf," ", 1.002853, "\n");
 
 ```
+
+
+## Testing of mixed eta prior
+
+
+```R
+
+  library(BF)
+  set.seed(101)
+  
+  Nsamples = 40
+  Nsites = 50
+  
+  pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+  
+  
+  v = round ( rexp(Nsamples * Nsites, rate=0.1) / 50 ) 
+  variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+    
+  s = which(pheno == 1)
+  for(i in s) variants[,i] = round ( rexp( Nsites, rate=0.2) / 50 )   
+  
+  t1=(apply(variants[,pheno==0],1,sum))
+  t2=(apply(variants[,pheno==1],1,sum))
+  cat(mean(t1,na.rm=T),mean(t2,na.rm=T),"\n")
+  
+  
+  t1 = system.time( r <- BF(variants,pheno,verbose=T, method = "mix_eta") )
+  t1  
+  r
+  cat(r," ", 54637, "\n");
+
+```
+
+
