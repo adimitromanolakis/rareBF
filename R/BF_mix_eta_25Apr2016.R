@@ -3,17 +3,15 @@
 
 
 # # mixed prior for p, compare eta between cases and controls
-
 # Data: 0 / no minor allele   1 / at least one minor allele
 # 
-
 
 # Data = data.frame( c(10,20,30,40,50,60,70,10) , c(0,0,0,0,1,1,1,1)   )
 # par.set = c( 0.0001, 100, 0.0001, 100, 0.001, 200, 1,1 )
 
 # causal.pool = 1:200 #  number of sites in the gene/region rare variants
-#BF_mix_eta(Data,par.set)
-#install.packages("LearnBayes")
+# BF_mix_eta(Data,par.set)
+# install.packages("LearnBayes")
 
 
 library(LearnBayes)
@@ -23,6 +21,7 @@ library(LearnBayes)
 BF_mix_eta = function(Data, par.set, nsites) {
 
   #stop("NEED TO FIX genotype order")
+  # Note: Check for phenotype order problems
   
   cat("nsites=", nsites, "\n")
   

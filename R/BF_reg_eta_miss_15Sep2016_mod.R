@@ -2,6 +2,7 @@
 
 # revised based on BF_25Feb216.R
 
+# Can handle missing Data
 
 
 BF_reg_eta_miss = function(Data,par.set,KK) {
