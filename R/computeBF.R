@@ -111,8 +111,17 @@ run_BF = function(snps, pheno, method, permuteSamples, KK,  verbose = F) {
   if(method == "mix_eta") {
     BayesFactor = try( BF_mix_eta(dataset, Eta.par,  nrow(snps)  ) )
   }
- 
   
+  if(method == "mix_both") {
+    BayesFactor = try( BF_mix_eta(dataset, Both.par,  nrow(snps)  ) )
+  }
+ 
+  if(method == "mix_w0") {
+    BayesFactor = try( BF_mix_w0(dataset, W.par,  nrow(snps)  ) )
+  }
+  
+  
+    
   # BF.mix.eta = 1
   
   if( "try-error" %in% class(BayesFactor) ) BayesFactor = NA

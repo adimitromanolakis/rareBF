@@ -17,8 +17,11 @@
 ##' \itemize{
 ##'  \item{ \code{reg_eta_miss} : }{Regular prior, able to handle missing data}
 ##'  \item{ \code{mix_eta} : }{Mixed prior}
+##'  \item{ \code{mix_both} : }{Mixed prior both}
+##'  \item{ \code{mix_w0} : }{Mixed prior w0}
+
 ##' }
-#'  More information is available at the following link: \url{http://www.r-project.org}
+#'  More information is available at the following link: \url{https://adimitromanolakis.github.io/rareBF/}
 #' 
 #' 
 #' 
@@ -53,7 +56,7 @@ BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, verbose
     stop("pheno and variants specify different number of individuals")  
   }
 
-  available_methods = c("reg_eta_miss", "mix_eta")
+  available_methods = c("reg_eta_miss", "mix_eta", "mix_both", "mix_w0")
   
   if(!(method %in% available_methods)) {
     stop("method argument not recognized")  
