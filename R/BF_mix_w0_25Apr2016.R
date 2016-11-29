@@ -1,9 +1,9 @@
 # # mixed prior for p, compare w0 between cases and controls
 
-BF_mix_w0 = function(Data,par.set){
+BF_mix_w0 = function(Data,par.set,nsites){
   
   z.function = function(eta.pos,k.pos){
-    return(beta(eta.pos*k.pos,(length(causal.pool)+k.pos*(1-eta.pos)))/beta(eta.pos*k.pos,(k.pos*(1-eta.pos))))
+    return(beta(eta.pos*k.pos,(nsites+k.pos*(1-eta.pos)))/beta(eta.pos*k.pos,(k.pos*(1-eta.pos))))
   }
   
   I_function = function(m.pos,eta.s,k.s,N,tt,Z){
@@ -39,8 +39,12 @@ BF_mix_w0 = function(Data,par.set){
   
   
   log_BF = function(obs.data){
-    obs.data1 = obs.data[1:sum(obs.data[,2]),]
-    obs.data0 = obs.data[-(1:sum(obs.data[,2])),]
+    
+    cases = which(obs.data[,2] == 1)
+    controls = which(obs.data[,2] == 0)
+    
+    obs.data1 = obs.data[ cases, ]
+    obs.data0 = obs.data[ controls, ]
     
     
     m.total = sum(obs.data[,1]==0)

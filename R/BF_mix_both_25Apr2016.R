@@ -1,7 +1,7 @@
 # # The BF is based on minor allele counts 
 # mixed prior for p, compare both w0 and eta
 
-BF_mix_both = function(Data,par.set){
+BF_mix_both = function(Data,par.set, nsites) {
   
   eta.star=par.set[1]
   k.star=par.set[2]
@@ -19,7 +19,7 @@ BF_mix_both = function(Data,par.set){
     
   bfexch_case = function(theta,datapar){
     x = sort(datapar$data)
-    n = length(causal.pool)
+    n = nsites
     m0 = datapar$m0
     j0 = datapar$j0
     eta.pos = exp(theta)/(1+exp(theta))
@@ -38,7 +38,7 @@ BF_mix_both = function(Data,par.set){
   
   bfexch_control = function(theta,datapar){
     x = sort(datapar$data)
-    n = length(causal.pool)
+    n = nsites
     m0 = datapar$m0
     j0 = datapar$j0
     eta.pos = exp(theta)/(1+exp(theta))
@@ -56,7 +56,7 @@ BF_mix_both = function(Data,par.set){
   
   bfexch_total = function(theta,datapar){
     x = sort(datapar$data)
-    n = length(causal.pool)
+    n = nsites
     
     m0 = datapar$m0
     j0 = datapar$j0
@@ -123,8 +123,12 @@ BF_mix_both = function(Data,par.set){
   
   log_BF = function(obs.data){
     
-    obs.data1 = obs.data[1:sum(obs.data[,2]),]
-    obs.data0 = obs.data[-(1:sum(obs.data[,2])),]
+    #
+    cases = which(obs.data[,2] == 1)
+    controls = which(obs.data[,2] == 0)
+    
+    obs.data1 = obs.data[ cases, ]
+    obs.data0 = obs.data[ controls, ]
     
     m.total = sum(obs.data[,1]==0)
     m.case = sum(obs.data1[,1]==0)
