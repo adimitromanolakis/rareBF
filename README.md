@@ -11,8 +11,7 @@ R package for Bayesian Models for Rare Variant Association Analysis.
 Users can install the most recent version by running (in R):
 
 ```R
- install.packages("https://github.com/adimitromanolakis/rareBF/releases/download/1.01/BF_1.01.tar.gz")
-
+install.packages("https://github.com/adimitromanolakis/rareBF/releases/download/1.01/BF_1.01.tar.gz",repos=NULL, verbose=T)
 ```
 
 ## Basic Usage
@@ -31,7 +30,9 @@ The following example demonstrates simulating data from the null model:
   
   v = round ( rexp(Nsamples * Nsites, rate=0.1) /50 ) 
   variants = matrix(v, ncol=Nsamples, nrow=Nsites)
-  bf = BF(variants,pheno,verbose=F)
+  
+  
+  bf = BF(variants, pheno, method="reg_eta_miss", verbose=F)
  
   # expected  1.002853
   
