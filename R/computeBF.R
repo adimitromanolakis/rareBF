@@ -69,7 +69,8 @@ run_BF = function(snps, pheno, method, permuteSamples, KK,  verbose = F) {
     p1.hat_nonzero = mean(new.geno_nonzero$p.hat[case_nonzero.index])
     
     # Eta.par[7] = 1-nrow(new.geno_nonzero)/nrow(new.geno) # Aug 2nd 2016 for TP63
-    Eta.par[1] = Eta.par[5] = p0.hat_nonzero
+    Eta.par[1] = min(p0.hat_nonzero,p1.hat_nonzero)
+    Eta.par[5] = p0.hat_nonzero
     Eta.par[3] = p1.hat_nonzero
     Both.par[1] = Both.par[5] = p0.hat_nonzero
     Both.par[3] = p1.hat_nonzero
