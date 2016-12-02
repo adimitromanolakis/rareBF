@@ -74,3 +74,27 @@ The following example demonstrates simulating data from the null model:
 ```
 
 
+## Use with modified hyper parameters
+
+The following example illustrates how you can modify the default hyper parameters when running the BF function:
+
+```
+library(BF)
+
+set.seed(101)
+Nsamples = 40
+Nsites = 50
+
+pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+
+v = round ( rexp(Nsamples * Nsites, rate=0.1) /50 ) 
+variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+
+hyper_parameters = c(0.08210526 ,44968.96, 0.08190476 ,37916.96, 0.08210526, 44968.96 )
+
+bf = BF(variants, pheno, method="reg_eta_miss", verbose=F, hyper=hyper_parameters)
+
+# expected  1.002853
+
+cat(bf," ", 1.002853, "\n");
+```
