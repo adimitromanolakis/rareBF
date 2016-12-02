@@ -20,7 +20,7 @@ The following example demonstrates simulating data from the null model:
 
 
 ```R
-  library(BF)
+  library(rareBF)
   
   set.seed(101)
   Nsamples = 40
@@ -46,7 +46,7 @@ The following example demonstrates simulating data from the null model:
 
 ```R
 
-  library(BF)
+  library(rareBF)
   set.seed(101)
   
   Nsamples = 40
@@ -79,7 +79,7 @@ The following example demonstrates simulating data from the null model:
 The following example illustrates how you can modify the default hyper parameters when running the BF function:
 
 ```R
-library(BF)
+library(rareBF)
 
 set.seed(101)
 Nsamples = 40
@@ -103,7 +103,7 @@ cat(bf," ", 1.002853, "\n");
 
 
 ```R
-library(BF)
+library(rareBF)
 
 
 set.seed(10)

@@ -53,6 +53,10 @@ compute_hyper_parameters = function(variants_per_individual, non_missing_sites, 
         # Eta.par[7] = 1-nrow(new.geno_nonzero)/nrow(new.geno) # Aug 2nd 2016 for TP63
         Eta.par[1] = min(p0.hat_nonzero,p1.hat_nonzero)
         Eta.par[5] = p0.hat_nonzero
+        
+        #Eta.par[1] = Eta.par[5] = p0.hat_nonzero # Old method
+        
+        
         Eta.par[3] = p1.hat_nonzero
         return ( Eta.par )
     }
@@ -216,17 +220,17 @@ run_BF = function(snps, pheno, method, permuteSamples, KK,  hyper, verbose = F) 
   
   if(method == "mix_eta") {
     Eta.par = par
-    BayesFactor = try( BF_mix_eta(dataset, Eta.par,  nrow(snps)  ) )
+    BayesFactor = try( BF_mix_eta(dataset, Eta.par,  non_missing_sites[1]  ) )
   }
   
   if(method == "mix_both") {
     Both.par = par
-    BayesFactor = try( BF_mix_eta(dataset, Both.par,  nrow(snps)  ) )
+    BayesFactor = try( BF_mix_eta(dataset, Both.par, non_missing_sites[1]  ) )
   }
  
   if(method == "mix_w0") {
     W.par = par
-    BayesFactor = try( BF_mix_w0(dataset, W.par,  nrow(snps)  ) )
+    BayesFactor = try( BF_mix_w0(dataset, W.par,  non_missing_sites[1]  ) )
   }
   
   
