@@ -167,14 +167,20 @@ run_BF = function(variants_per_individual, non_missing_sites, pheno, method, per
   
 
   if( class(hyper) == "function") {
+    
     par = hyper(variants_per_individual, non_missing_sites, pheno, method)
+    
   } else if(is.na(hyper)) {
+    
     par = compute_hyper_parameters(variants_per_individual, non_missing_sites, pheno, method )
     
   } else {
+    
     par = hyper  
     
   }
+  
+  
   #last_par  <<- par
   #cat("par=", par)
   
@@ -239,23 +245,32 @@ if(0) {
 parapply = function(n, f) { mclapply(mc.cores=mc.cores ,n, f) }
 #parapply = function(n, f) { lapply(n, f) }
 
-adaptivePermutation = function(f)  {
+
+
+
+
+#' Adaptive truncated permuatation methods
+#' 
+#' @export
+adaptivePermutation = function(f, maxPerm = 3e6, parapply = lapply)  {
   
   n = 0
   b = 0
   
   b = b + sum ( unlist( parapply(1:10, f ) ) )
   n = n + 10
+  cat("b=",b,n,"\n")
   
-  if(b > 3) return(b/n)
+  if(b > 3) return ( c(b/n,b,n) )
   
   permToRun = 40
   
   #while( b < 10 && n < 500000) {
-  while( b < 20 && n < 3000000) {
+  while( b < 20 && n < maxPerm) {
     b = b + sum ( unlist( parapply(1:permToRun, f ) ) )
     n = n + permToRun
     permToRun = round(1.3*permToRun)
+    if(permToRun > maxPerm) permToRun = maxPerm
   }
   
   
