@@ -41,7 +41,7 @@
 #' @seealso \code{\link{BF}}
 #' 
 #' @export
-BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, verbose = FALSE) {
+BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, hyper = NA, verbose = FALSE) {
   
   if(! ( class(pheno) == "numeric" || class(pheno) == "integer" ) ) {
     stop("pheno must be a numeric vector")
@@ -65,7 +65,7 @@ BF = function(variants, pheno, method = "reg_eta_miss", param, KK = 500, verbose
   returnvalue = NA
   
   #variants = variants^1
-  returnvalue = run_BF(variants, pheno, method, F, KK, verbose)
+  returnvalue = run_BF(variants, pheno, method, F, KK, hyper, verbose)
   
   
   return(returnvalue)

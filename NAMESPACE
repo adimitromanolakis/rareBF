@@ -2,4 +2,5 @@
 
 export(BF)
 export(example1)
+export(compute_hyper_parameters)
 import(LearnBayes)
