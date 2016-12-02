@@ -78,7 +78,7 @@ The following example demonstrates simulating data from the null model:
 
 The following example illustrates how you can modify the default hyper parameters when running the BF function:
 
-```
+```R
 library(BF)
 
 set.seed(101)
@@ -98,3 +98,51 @@ bf = BF(variants, pheno, method="reg_eta_miss", verbose=F, hyper=hyper_parameter
 
 cat(bf," ", 1.002853, "\n");
 ```
+
+## Comparison of methods
+
+
+```R
+library(BF)
+
+
+set.seed(10)
+
+Nsamples = 150
+Nsites = 100
+
+pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+
+
+v = round ( rexp(Nsamples * Nsites, rate=0.01) / 50 ) 
+variants = matrix(v, ncol=Nsamples, nrow=Nsites)
+
+
+
+s = which(pheno == 1)
+for(i in s) variants[,i] = round ( rexp( Nsites, rate=0.012) / 50 )   
+
+t1=(apply(variants[,pheno==0],1,sum))
+t2=(apply(variants[,pheno==1],1,sum))
+cat(mean(t1),mean(t2),"\n")
+
+
+t1 = system.time( r <- BF(variants,pheno,verbose=F, method = "reg_eta_miss") )
+
+cat("------ reg_eta_miss  BF=", r , "   time spent=", t1[1])
+
+t1 = system.time( r <- BF(variants,pheno,verbose=F, method = "mix_w0") )
+
+cat("------ mix_w0  BF=", r , "   time spent=", t1[1])
+
+t1 = system.time( r <- BF(variants,pheno,verbose=F, method = "mix_eta") )
+
+cat("------ mix_eta  BF=", r , "   time spent=", t1[1])
+
+t1 = system.time( r <- BF(variants,pheno,verbose=F, method = "mix_both") )
+
+cat("------ mix_both  BF=", r , "   time spent=", t1[1])
+
+```
+
+
