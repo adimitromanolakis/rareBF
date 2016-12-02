@@ -181,6 +181,8 @@ run_BF = function(snps, pheno, method, permuteSamples, KK,  hyper, verbose = F) 
   #dataset = dataset[sample.order ,]
   #snps = snps[, sample.order ]
   
+  par = NA
+  
   if(is.na(hyper) || class(hyper) == "function") {
     par = compute_hyper_parameters(variants_per_individual, non_missing_sites, pheno, method )
   } else {
@@ -200,7 +202,7 @@ run_BF = function(snps, pheno, method, permuteSamples, KK,  hyper, verbose = F) 
   if(verbose) cat("#### Dataset:\n")
   if(verbose) print(dataset)
   if(verbose) cat("KK=",KK, "\n");
-  if(verbose) cat("params = ", Eta.par.reg , "\n" )
+  if(verbose) cat("params = ", par , "\n" )
   
   
   BayesFactor = NA
