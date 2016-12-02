@@ -92,36 +92,14 @@ compute_hyper_parameters = function(variants_per_individual, non_missing_sites, 
 
 #' Wrapper for Bayes factor methods
 #'
-#' @param snps Variants
+#' @param variants_per_individual vector
+#' @param non_missing_sites vector
+#' @param pheno vector
 #'
 #' @return BF
-run_BF = function(snps, pheno, method, permuteSamples, KK,  hyper, verbose = F) {
+run_BF = function(variants_per_individual, non_missing_sites, pheno, method, permuteSamples, KK,  hyper, verbose = F) {
 
   
-  
-  # snps : genotypes coded as NA/0/1/2
-  # pheno : phenotypes
-  
-  
-  
-  # Recode as 0: no alleles 
-  # snps = ( snps > 0 ) ^ 1     
-  # causal.pool = 1:nrow(snps)
-  
-  variants_per_individual = apply(snps,2, function(x) sum(x>0,na.rm=T))
-  
-  # Number of non missing sites per individual
-  # For all methods except reg_eta_miss , use just number of sites
-  
-  if(method == "reg_eta_miss")
-    { non_missing_sites = apply(snps,2,function(x) sum(!is.na(x))) }
-  else
-    { sites = nrow(snps); non_missing_sites = rep(sites, length(variants_per_individual) ); }
-  
-  #non_missing_sites = apply(snps,2,function(x) sum(!is.na(x)))
-  #cat("Site = ", non_missing_sites,"\n")
-  #{ sites = nrow(snps); non_missing_sites = rep(sites, length(variants_per_individual) ); }
-  #cat("Site = ", non_missing_sites,"\n")
   
   
   

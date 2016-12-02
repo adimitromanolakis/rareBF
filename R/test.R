@@ -175,6 +175,16 @@ test4 = function()  {
   r
   cat("Result: " , r," ", 3036207, "\n");
   
+  
+  vars = apply(variants,2,function(x) sum(x>0))
+  sites = apply(variants,2,length)
+  sites
+  
+  t1 = system.time( r <- BFvector(vars,sites,pheno) )
+  t1
+  r
+  
+  
   #expected 3036207
 }
 
