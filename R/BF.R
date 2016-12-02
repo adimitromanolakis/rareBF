@@ -6,7 +6,6 @@
 #' @param nvariants matrix Data frame of sites ( rows ) x individuals ( columns )
 #' @param pheno vector Phenotypes (0/1)
 #' @param method One of the Bayes Factor methods to use (default reg_eta_miss)
-#' @param param Fine tuning of parameter set
 #' @param KK Default is 500
 #' @param hyper Specify hyper parameters or function returning hyper parameters
 #' @param verbose Print additional debugging information
@@ -115,7 +114,6 @@ BF = function(variants, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, v
 #' @param nsites vector  (required) Number of (non-missing) sites per individual
 #' @param pheno vector  (required) Phenotypes (0/1)
 #' @param method One of the Bayes Factor methods to use (default reg_eta_miss)
-#' @param param Fine tuning of parameter set
 #' @param KK Default is 500
 #' @param hyper Specify hyper parameters or function returning hyper parameters
 #' @param verbose Print additional debugging information
@@ -207,7 +205,6 @@ BFvector = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500,
 #' @param nsites vector  (required) Number of (non-missing) sites per individual
 #' @param pheno vector  (required) Phenotypes (0/1)
 #' @param method One of the Bayes Factor methods to use (default reg_eta_miss)
-#' @param param Fine tuning of parameter set
 #' @param KK Default is 500
 #' @param hyper Specify hyper parameters or function returning hyper parameters
 #' @param verbose Print additional debugging information
@@ -251,7 +248,7 @@ BFvectorPermutations = function(variants, nsites, pheno, method = "reg_eta_miss"
   cat("originalBF=", originalBF, "\n");
   
   f = function(x) { 
-    cat(originalBF); 
+    #cat(originalBF); 
     r = run_BF(variants, nsites, pheno, method, T, KK, hyper, F) > originalBF 
     r
   }

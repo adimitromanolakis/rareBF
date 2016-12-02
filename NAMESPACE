@@ -4,4 +4,8 @@ export(BF)
 export(BFvector)
 export(compute_hyper_parameters)
 export(example1)
+export(run_BF)
+export(adaptivePermutation)
+export(BFvectorPermutations)
+
 import(LearnBayes)
