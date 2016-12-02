@@ -165,13 +165,16 @@ run_BF = function(variants_per_individual, non_missing_sites, pheno, method, per
   
   par = NA
   
-  if(is.na(hyper) || class(hyper) == "function") {
+
+  if( class(hyper) == "function") {
+    par = hyper(variants_per_individual, non_missing_sites, pheno, method)
+  } else if(is.na(hyper)) {
     par = compute_hyper_parameters(variants_per_individual, non_missing_sites, pheno, method )
+    
   } else {
     par = hyper  
+    
   }
-  
-  
   #last_par  <<- par
   #cat("par=", par)
   
