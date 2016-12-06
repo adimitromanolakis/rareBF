@@ -61,7 +61,7 @@ BF = function(variants, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, v
     stop("pheno and variants specify different number of individuals")  
   }
 
-  available_methods = c("reg_eta_miss", "mix_eta", "mix_both", "mix_w0")
+  available_methods = c("reg_eta_miss", "reg_eta", "mix_eta", "mix_both", "mix_w0")
   
   if(!(method %in% available_methods)) {
     stop("method argument not recognized")  
@@ -165,7 +165,7 @@ BFvector = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500,
     stop("pheno and variants specify different number of individuals")  
   }
   
-  available_methods = c("reg_eta_miss", "mix_eta", "mix_both", "mix_w0")
+  available_methods = c("reg_eta_miss", "reg_eta", "mix_eta", "mix_both", "mix_w0")
   
   if(!(method %in% available_methods)) {
     stop("method argument not recognized")  
@@ -231,7 +231,7 @@ BFvectorPermutations = function(variants, nsites, pheno, method = "reg_eta_miss"
     stop("pheno and variants specify different number of individuals")  
   }
   
-  available_methods = c("reg_eta_miss", "mix_eta", "mix_both", "mix_w0")
+  available_methods = c("reg_eta_miss", "reg_eta", "mix_eta", "mix_both", "mix_w0")
   
   if(!(method %in% available_methods)) {
     stop("method argument not recognized")  

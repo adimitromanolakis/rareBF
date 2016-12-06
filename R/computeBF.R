@@ -34,7 +34,7 @@ compute_hyper_parameters = function(variants_per_individual, non_missing_sites, 
     p0.hat = mean(p.hat[ which(pheno==0) ])
     p1.hat = mean(p.hat[ which(pheno==1) ])
     
-    if(method == "reg_eta_miss") {
+    if(method == "reg_eta_miss" || method == "reg_eta") {
   
       Eta.par.reg[1] = Eta.par.reg[5] = p0.hat
       Eta.par.reg[3] = p1.hat
@@ -203,6 +203,11 @@ run_BF = function(variants_per_individual, non_missing_sites, pheno, method, per
     dataset$sites.num = non_missing_sites
     Eta.par.reg = par
     BayesFactor = try( BF_reg_eta_miss(dataset, Eta.par.reg, KK) )
+  }
+  
+  if(method == "reg_eta") {
+    Eta.par = par
+    BayesFactor = try( BF_reg_eta(dataset, Eta.par, KK,  non_missing_sites[1]  ) )
   }
   
   if(method == "mix_eta") {

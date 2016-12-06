@@ -1,6 +1,6 @@
 # revised based on BF_25Feb216.R
 
-BF_reg_eta = function(Data,par.set,KK){
+BF_reg_eta = function(Data,par.set,KK,nsites){
   
   eta.star.reg = par.set[1] 
   k.star.reg = par.set[2] 
@@ -11,7 +11,7 @@ BF_reg_eta = function(Data,par.set,KK){
   
   bfexch_case = function(theta,datapar){
     x = datapar$data
-    n = length(causal.pool)
+    n = nsites
     K = datapar$K
     eta.pos = exp(theta)/(1+exp(theta))
     N = length(x)
@@ -27,7 +27,7 @@ BF_reg_eta = function(Data,par.set,KK){
   
   bfexch_control = function(theta,datapar){
     x = datapar$data
-    n = length(causal.pool)
+    n = nsites
     K = datapar$K
     eta.pos = exp(theta)/(1+exp(theta))
     N = length(x) 
@@ -43,7 +43,7 @@ BF_reg_eta = function(Data,par.set,KK){
   
   bfexch_total = function(theta,datapar){
     x = datapar$data
-    n = length(causal.pool)
+    n = nsites
     K = datapar$K
     eta.pos = exp(theta)/(1+exp(theta))
     N = length(x)
@@ -62,10 +62,18 @@ BF_reg_eta = function(Data,par.set,KK){
   # BF function based on non-informative prior, uniform prior
   BF_function = function(K0,obs.data){
     N = nrow(obs.data)
+    cases = which(obs.data[,2] == 1)
+    controls = which(obs.data[,2] == 0)
+    
+    cat(cases,"\n")
+    cat(controls,"\n")
+    cat("par=",par.set,"\n")
+    
+    
     logm_total = laplace(bfexch_total,0,list(data=obs.data[,1],K=K0))$int
-    logm_case = laplace(bfexch_case,0,list(data=obs.data[1:sum(obs.data[,2]),1],K=K0))$int
+    logm_case = laplace(bfexch_case,0,list(data=obs.data[cases,1],K=K0))$int
     #logm_case
-    logm_control = laplace(bfexch_control,0,list(data=obs.data[(sum(obs.data[,2])+1):N,1],K=K0))$int
+    logm_control = laplace(bfexch_control,0,list(data=obs.data[controls,1],K=K0))$int
     #logm_control
     print(c(logm_case , logm_control , logm_total))
     return(exp(logm_case + logm_control - logm_total))
