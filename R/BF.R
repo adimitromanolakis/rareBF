@@ -216,7 +216,7 @@ BFvector = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500,
 #' @seealso \code{\link{BFvector}}
 #' 
 #' @export
-BFvectorPermutations = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, permutations = NA, verbose = FALSE) {
+BFvectorPermutations = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, permutations = NA, verbose = FALSE, applyfun = lapply) {
   
   
   if(! ( class(pheno) == "numeric" || class(pheno) == "integer" ) ) {
@@ -253,7 +253,7 @@ BFvectorPermutations = function(variants, nsites, pheno, method = "reg_eta_miss"
     r
   }
   
-  permResult = adaptivePermutation(f, permutations, lapply)
+  permResult = adaptivePermutation(f, permutations, applyfun)
 
   ret = list(originalBF=originalBF, p.value = permResult[1], n.success = permResult[2], n.total = permResult[3])
   
