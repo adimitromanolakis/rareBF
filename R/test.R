@@ -35,12 +35,39 @@ example1 = function() {
 }
 
 
+
+#' Example 2 for Bayes factor methods: Using reg_eta and vector input data
+#'
+#' @return BF
+#' @export
+example2 = function() {
+  
+  
+  set.seed(101)
+  
+  Nsamples = 240
+  Nsites = 150
+  
+  pheno = ( runif(Nsamples) > 0.5 ) * 1
+  
+  v = round ( rexp(Nsamples * Nsites, rate=0.2 + 0.02*pheno) / 50 ) 
+  variants = matrix(v, ncol=Nsamples, nrow=Nsites,byrow=T)
+  variants = apply(variants,2,sum)
+  
+  sites.num = rep(Nsites, length(pheno))
+  length(variants) == length(pheno)
+  
+  
+  BFvector(variants, sites.num, pheno, method="reg_eta") 
+  
+  # Expected 33.61
+}
+
+  
+  
+
 test_null = function()  {
 
-source("R/BF.R")
-source("R/BF-package.r")
-source("R/R-bf-permute.R")
-source("R/BF_reg_eta_miss_15Sep2016_mod.R")
 
 
 set.seed(101)
@@ -73,11 +100,7 @@ cat("Result: " , ret," ", 1.002853, "\n");
 
 test_null2 = function()  {
   
-  source("R/BF.R")
-  source("R/BF-package.r")
-  source("R/R-bf-permute.R")
-  source("R/BF_reg_eta_miss_15Sep2016_mod.R")
-  
+
   
   set.seed(101)
   
@@ -109,11 +132,7 @@ test_null2 = function()  {
 
 test3 = function()  {
   
-  source("R/BF.R")
-  source("R/BF-package.r")
-  source("R/R-bf-permute.R")
-  source("R/BF_reg_eta_miss_15Sep2016_mod.R")
-  
+
   
   set.seed(10)
   
@@ -142,12 +161,7 @@ test3 = function()  {
 
 
 test4 = function()  {
-  
-  source("R/BF.R")
-  source("R/BF-package.r")
-  source("R/R-bf-permute.R")
-  source("R/BF_reg_eta_miss_15Sep2016_mod.R")
-  
+
   
   set.seed(10)
   
@@ -184,6 +198,12 @@ test4 = function()  {
   t1
   r
   
+  originalBF = r
+  f = function(x) { BFvector(vars,sites,pheno,perm=1) > originalBF } 
+  
+  parapply = lapply
+  adaptivePermutation(f)
+  
   
   #expected 3036207
 }
@@ -191,11 +211,7 @@ test4 = function()  {
 
 test5 = function()  {
   
-  source("R/BF.R")
-  source("R/BF-package.r")
-  source("R/R-bf-permute.R")
-  source("R/BF_reg_eta_miss_15Sep2016_mod.R")
-  
+
   
   set.seed(10)
   
