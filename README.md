@@ -12,7 +12,7 @@ Users can install the most recent version by running (in R):
 
 ```R
 install.packages(
-"http://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF_1.05.tar.gz",
+"https://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF_1.05.tar.gz",
  repos=NULL, verbose=T)
 ```
 
