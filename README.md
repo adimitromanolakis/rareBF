@@ -16,6 +16,14 @@ install.packages(
  repos=NULL, verbose=T)
 ```
 
+If that fails, you can try downloading the package source from: [rareBF_1.05.tar.gz](https://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF_1.05.tar.gz) and installing manually:
+
+```R
+install.packages("rareBF_1.05.tar.gz")
+```
+
+
+
 On MACOS or Windows, you can download the [zip file](https://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF-v1.05.zip) from the link below and install using: 
 ```R
 install.packages("rareBF-v1.05.zip")
