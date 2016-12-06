@@ -65,9 +65,9 @@ BF_reg_eta = function(Data,par.set,KK,nsites){
     cases = which(obs.data[,2] == 1)
     controls = which(obs.data[,2] == 0)
     
-    cat(cases,"\n")
-    cat(controls,"\n")
-    cat("par=",par.set,"\n")
+    #cat(cases,"\n")
+    #cat(controls,"\n")
+    #cat("par=",par.set,"\n")
     
     
     logm_total = laplace(bfexch_total,0,list(data=obs.data[,1],K=K0))$int
