@@ -12,8 +12,8 @@ Users can install the most recent version by running (in R):
 
 ```R
 install.packages(
-  "https://github.com/adimitromanolakis/rareBF/releases/download/v1.04/rareBF_1.04.tar.gz",
-  repos=NULL, verbose=T)
+"https://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF_1.05.tar.gz",
+ repos=NULL, verbose=T)
 ```
 
 ## Basic Usage
@@ -28,7 +28,7 @@ The following example demonstrates simulating data from the null model:
   Nsamples = 40
   Nsites = 50
   
-  pheno = ( runif(Nsamples) > 0.5 ) ^ 1
+  pheno = ( runif(Nsamples) > 0.5 ) * 1
   
   v = round ( rexp(Nsamples * Nsites, rate=0.1) /50 ) 
   variants = matrix(v, ncol=Nsamples, nrow=Nsites)
@@ -39,6 +39,32 @@ The following example demonstrates simulating data from the null model:
   # expected  1.002853
   
   cat(bf," ", 1.002853, "\n");
+
+```
+## Vector input data
+
+You can specify the input data as vectors insted of variant matrices. The following example illustrated this:
+
+```R
+ 
+  set.seed(101)
+  
+  Nsamples = 240
+  Nsites = 150
+  
+  pheno = ( runif(Nsamples) > 0.5 ) * 1
+  
+  v = round ( rexp(Nsamples * Nsites, rate=0.2 + 0.02*pheno) / 50 ) 
+  variants = matrix(v, ncol=Nsamples, nrow=Nsites,byrow=T)
+  variants = apply(variants,2,sum)
+  
+  sites.num = rep(Nsites, length(pheno))
+  length(variants) == length(pheno)
+  
+  
+  BFvector(variants, sites.num, pheno, method="reg_eta") 
+  
+  # Expected 33.61
 
 ```
 
