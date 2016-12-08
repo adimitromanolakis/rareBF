@@ -36,7 +36,8 @@ compute_hyper_parameters = function(variants_per_individual, non_missing_sites, 
     
     if(method == "reg_eta_miss" || method == "reg_eta") {
   
-      Eta.par.reg[1] = Eta.par.reg[5] = p0.hat
+      Eta.par.reg[1] = mean(p.hat)
+      Eta.par.reg[5] = p0.hat
       Eta.par.reg[3] = p1.hat
       return (Eta.par.reg);
     
