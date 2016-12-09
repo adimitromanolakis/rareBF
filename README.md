@@ -11,9 +11,8 @@ R package for Bayesian Models for Rare Variant Association Analysis.
 Users can install the most recent version by running (in R):
 
 ```R
-install.packages(
-"https://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF_1.05.tar.gz",
- repos=NULL, verbose=T)
+install.packages("LearnBayes")
+install.packages("rareBF", repos="http://rarebf.ml/R", type="source")
 ```
 
 If that fails, you can try downloading the package source from: [rareBF_1.05.tar.gz](https://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF_1.05.tar.gz) and installing manually:
