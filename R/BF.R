@@ -117,8 +117,9 @@ BF = function(variants, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, v
 #' @param KK Default is 500
 #' @param hyper Specify hyper parameters or function returning hyper parameters
 #' @param verbose Print additional debugging information
+#' @param permutations (integer) Perform a permutation test to obtain p-values
 #'
-#' @return Bayes Factor (numeric)
+#' @return Bayes Factor (numeric) or permutation info (list of 4 elements)
 #' 
 #' @details
 #'  nvariants contains a matrix of variants per site. Missing data are coded as NA. 
@@ -150,7 +151,7 @@ BF = function(variants, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, v
 #' @seealso \code{\link{BF}}
 #' 
 #' @export
-BFvector = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, permutations = NA, verbose = FALSE) {
+BFvector = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, permutations = NA, verbose = FALSE, applyfun = lapply) {
   
   
   if(! ( class(pheno) == "numeric" || class(pheno) == "integer" ) ) {
@@ -162,7 +163,7 @@ BFvector = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500,
   }
   
   if(1) if(length(variants) != length(pheno) || length(nsites) != length(pheno)  )  {
-    stop("pheno and variants specify different number of individuals")  
+    stop("pheno, variants and nsites specify different number of individuals")  
   }
   
   available_methods = c("reg_eta_miss", "reg_eta", "mix_eta", "mix_both", "mix_w0")
@@ -175,77 +176,19 @@ BFvector = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500,
   
   returnvalue = NA
   
-  if(!is.na(permutations)) {
-    
-    returnvalue = run_BF(variants, nsites, pheno, method, T, KK, hyper, verbose)
-    return (returnvalue)
-    
-  }
-  
-  returnvalue = run_BF(variants, nsites, pheno, method, F, KK, hyper, verbose)
-  
-  
-
-  
-  
-  return(returnvalue)
-}
-
-
-
-
-
-
-
-
-
-#' Run permutations for BF method for vector data
-#'
-#' @param variants vector (required) Number of sites per individual
-#' @param nsites vector  (required) Number of (non-missing) sites per individual
-#' @param pheno vector  (required) Phenotypes (0/1)
-#' @param method One of the Bayes Factor methods to use (default reg_eta_miss)
-#' @param KK Default is 500
-#' @param hyper Specify hyper parameters or function returning hyper parameters
-#' @param verbose Print additional debugging information
-#'
-#' @return Bayes Factor (numeric)
-#' 
-#' @details
-#'  More information is available at the following link: \url{https://adimitromanolakis.github.io/rareBF/}
-#' @seealso \code{\link{BFvector}}
-#' 
-#' @export
-BFvectorPermutations = function(variants, nsites, pheno, method = "reg_eta_miss",  KK = 500, hyper = NA, permutations = NA, verbose = FALSE, applyfun = lapply) {
-  
-  
-  if(! ( class(pheno) == "numeric" || class(pheno) == "integer" ) ) {
-    stop("pheno must be a numeric vector")
-  }
-  
-  if(! identical( sort(unique(pheno)) , c(0,1) ) ) {
-    stop("phenotype vector must contain only 0 or 1")
-  }
-  
-  if(1) if(length(variants) != length(pheno) || length(nsites) != length(pheno)  )  {
-    stop("pheno and variants specify different number of individuals")  
-  }
-  
-  available_methods = c("reg_eta_miss", "reg_eta", "mix_eta", "mix_both", "mix_w0")
-  
-  if(!(method %in% available_methods)) {
-    stop("method argument not recognized")  
-  }
-  
   if(is.na(permutations)) {
-    stop("permutations number must be specified")
+    
+    returnvalue = run_BF(variants, nsites, pheno, method, F, KK, hyper, verbose)
+    return(returnvalue)
+    
   }
   
-
+  
+  # Permutations number specified
   
   originalBF = run_BF(variants, nsites, pheno, method, F, KK, hyper, verbose)
   
-  cat("originalBF=", originalBF, "\n");
+  message("originalBF=", originalBF, "\n");
   
   f = function(x) { 
     #cat(originalBF); 
@@ -254,11 +197,19 @@ BFvectorPermutations = function(variants, nsites, pheno, method = "reg_eta_miss"
   }
   
   permResult = adaptivePermutation(f, permutations, applyfun)
-
-  ret = list(originalBF=originalBF, p.value = permResult[1], n.success = permResult[2], n.total = permResult[3])
   
-  return(ret)
+  permutation.info = list(
+    originalBF=originalBF, 
+    p.value = permResult[1], 
+    n.success = permResult[2], 
+    n.perm = permResult[3]
+  )
+  
+  return(permutation.info)
+  
+  
 }
+
 
 
 

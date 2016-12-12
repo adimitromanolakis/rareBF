@@ -60,6 +60,10 @@ example2 = function() {
   
   BFvector(variants, sites.num, pheno, method="reg_eta") 
   
+  library(parallel)
+  options(mc.cores=4)
+  BFvector(variants, sites.num, pheno, method="reg_eta", perm=500, applyfun=mclapply) 
+  
   # Expected 33.61
 }
 
