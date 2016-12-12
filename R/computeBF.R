@@ -16,16 +16,18 @@ compute_hyper_parameters = function(variants_per_individual, non_missing_sites, 
   
   # Initial Hyper parameters
   # eta.star, k.star, eta1.star, k1.star, eta0.star, k0.star,w0.par,k.par
-  Eta.par = c(8.007217e-03, 2.348949e+04, 9.528792e-03, 2.319012e+04, 8.007217e-03, 2.348949e+04, 7.150010e-01, 1.225571e+04)
+#   Eta.par = c(8.007217e-03, 2.348949e+04, 9.528792e-03, 2.319012e+04, 8.007217e-03, 2.348949e+04, 7.150010e-01, 1.225571e+04)
   Eta.par.reg = c(2.022313e-03, 4.496896e+04, 2.632804e-03, 3.791696e+04, 2.022313e-03, 4.496896e+04)
   # eta.star, k.star, eta1.star, k1.star, eta0.star, k0.star, eta.tilde, k.tilde, eta1.tilde, k1.tilde, eta0.tilde, k0.tilde,k.par
-  Both.par=c(8.007217e-03, 2.348949e+04, 9.528792e-03, 2.319012e+04, 8.007217e-03, 2.348949e+04, 7.357986e-01, 
-             2.448824e+02, 6.914371e-01, 1.610376e+02, 7.357986e-01, 2.448824e+02, 1.225571e+04)
+#   Both.par=c(8.007217e-03, 2.348949e+04, 9.528792e-03, 2.319012e+04, 8.007217e-03, 2.348949e+04, 7.357986e-01, 
+#              2.448824e+02, 6.914371e-01, 1.610376e+02, 7.357986e-01, 2.448824e+02, 1.225571e+04)
   # eta.tilde, k.tilde, eta1.tilde, k1.tilde, eta0.tilde, k0.tilde,eta.par,k.par
-  W.par = c(7.342742e-01,1.979900e+02,6.917673e-01,2.075935e+02,7.342742e-01,1.979900e+02,8.741540e-03,1.262786e+04)
+#   W.par = c(7.342742e-01,1.979900e+02,6.917673e-01,2.075935e+02,7.342742e-01,1.979900e+02,8.741540e-03,1.262786e+04)
   
-  
-  
+  # New initial hyper parameters are computed based on new hyperparameter function "Fun_all_par_H0_13Nov2016.R" and 100kb simulated data "_06Dec2016" (11Dec2016)
+  Eta.par = c(6.948017e-03, 3.734636e+04, 6.938008e-03, 5.222202e+04, 6.948017e-03, 3.734636e+04, 4.387904e-01, 9.480634e+03)
+  Both.par = c(6.948017e-03, 3.734636e+04, 6.938008e-03, 5.222202e+04, 6.948017e-03, 3.734636e+04, 3.603100e-01, 5.657617e+01, 3.590419e-01, 7.986061e+01, 3.603100e-01, 5.657617e+01, 9.480634e+03)
+  W.par = c(3.603100e-01, 5.657617e+01, 3.590419e-01, 7.986061e+01, 3.603100e-01, 5.657617e+01, 7.087595e-03, 9.480634e+03)
     
     # Vector of invididual p.hat
     p.hat = variants_per_individual / non_missing_sites 
