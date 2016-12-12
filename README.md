@@ -15,10 +15,10 @@ install.packages("LearnBayes")
 install.packages("rareBF", repos="http://rarebf.ml/R", type="source")
 ```
 
-If that fails, you can try downloading the package source from: [rareBF_1.05.tar.gz](https://github.com/adimitromanolakis/rareBF/releases/download/v1.05/rareBF_1.05.tar.gz) and installing manually:
+If that fails, you can try downloading the package source from: [rareBF_1.06.tar.gz](https://github.com/adimitromanolakis/rareBF/releases/download/v1.06/rareBF_1.06.tar.gz) and installing manually:
 
 ```R
-install.packages("rareBF_1.05.tar.gz")
+install.packages("rareBF_1.06.tar.gz")
 ```
 
 
