@@ -1,7 +1,7 @@
 
 #print("Loaded R-bf-permute")
 #library(LearnBayes)
-
+# change
 #' Return Hyper parameters
 #'
 #' @param variants_per_individual number of variants per individual (n)
