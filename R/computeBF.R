@@ -46,9 +46,9 @@ compute_hyper_parameters = function(variants_per_individual, non_missing_sites, 
       Eta.par.reg[1] = mean(p.hat)
       Eta.par.reg[5] = p0.hat
       Eta.par.reg[3] = p1.hat
-      Eta.par.reg[2] = non_missing_sites *length(pheno)
-      Eta.par.reg[4] = non_missing_sites *sum(pheno==1)
-      Eta.par.reg[6] = non_missing_sites *sum(pheno==0)
+      Eta.par.reg[2] = length(non_missing_sites) *length(pheno)
+      Eta.par.reg[4] = length(non_missing_sites) *sum(pheno==1)
+      Eta.par.reg[6] = length(non_missing_sites) *sum(pheno==0)
       return (Eta.par.reg);
     }
     
@@ -132,7 +132,7 @@ run_BF = function(variants_per_individual, non_missing_sites, pheno, method, per
     input_data = data.frame(variants=variants_per_individual, pheno = pheno )
 
     # Vector of invididual p.hat
-    input_data$p.hat = variants_per_individual / non_missing_sites 
+    input_data$p.hat = variants_per_individual / non_missing_sites
     
     #input_data$cc = input_data$pheno
     #input_data$geno_sum = input_data$variants
@@ -143,9 +143,9 @@ run_BF = function(variants_per_individual, non_missing_sites, pheno, method, per
     Eta.par.reg[1] = mean(input_data$p.hat)
     Eta.par.reg[5] = p0.hat
     Eta.par.reg[3] = p1.hat
-    Eta.par.reg[2] = non_missing_sites *length(pheno)
-    Eta.par.reg[4] = non_missing_sites *sum(pheno==1)
-    Eta.par.reg[6] = non_missing_sites *sum(pheno==0)
+    Eta.par.reg[2] = length(non_missing_sites) *length(pheno)
+    Eta.par.reg[4] = length(non_missing_sites) *sum(pheno==1)
+    Eta.par.reg[6] = length(non_missing_sites) *sum(pheno==0)
     
     new.geno_nonzero = input_data[which(variants_per_individual > 0),]
     
