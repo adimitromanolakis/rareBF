@@ -98,7 +98,9 @@ BFmixture = function(obs.data, nvariants, low.bound = 10^(-2) ) {
       par.set[count,2] = exp(beta.root[1])/(1+exp(beta.root[1]))
       # par.set[count,2] = beta.root[1]
       par.set[count,3] = beta.root[2]
-      print(c(count,par.set[count,]))
+      
+      # print(c(count,par.set[count,]))
+      
       delta.par = abs(par.set[count,]-par.set[count-1,])/par.set[count-1,]
       
       if(count == nrow(par.set)| par.set[count,1]<=low.bound){
@@ -151,7 +153,7 @@ BFmixture = function(obs.data, nvariants, low.bound = 10^(-2) ) {
         eta.root = optim(log(par.eta[count0-1]/(1-par.eta[count0-1])),loglike_der_eta,method="Brent",lower=-10,upper=0,control=list(fnscale=-1))$par
         
         par.eta[count0] = exp(eta.root)/(1+exp(eta.root))
-        print(c(count0,par.eta[count0]))
+        # print(c(count0,par.eta[count0]))
         delta.par = abs(par.eta[count0]-par.eta[count0-1])/par.eta[count0-1]
       }
       
@@ -203,7 +205,12 @@ BFmixture = function(obs.data, nvariants, low.bound = 10^(-2) ) {
     
     # return(c(w0.fix,est_total,est_case,est_control,loglike_obs(N,x,m,est_total[1]),loglike_obs(N1,x1,m1,est_case[1]),loglike_obs(N2,x2,m2,est_control[1]),exp(I_case+I_control-I_total)))
     #return(c(w0.fix,k.fix,est_total[1],est_case[1],est_control[1],loglike_obs(N,x,m,est_total[1]),loglike_obs(N1,x1,m1,est_case[1]),loglike_obs(N2,x2,m2,est_control[1]),exp(I_case+I_control-I_total)))
-    return(c(w0.fix,k.fix,exp(I_case+I_control-I_total)))
+    
+    vec = c(w0.fix,k.fix,exp(I_case+I_control-I_total))
+    
+    names(vec) = c("prob.p.eq.0", "precision","BF")
+    
+    return( vec )
     
   }
   

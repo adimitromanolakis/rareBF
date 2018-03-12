@@ -14,10 +14,6 @@ nvariants = 72
 p = 8 
 
 
-#setwd("/Volumes/Briollais_lab/jingxiong/Project/sequencing_data/Manuscript/JASA/submission/Rcode")
-
-
-
 
 filename = "region-chr4-93-TMEM156.vcf.gz"
 
@@ -152,6 +148,8 @@ readGeneticMap(4)
     dataset_0 = data.frame(dataset_0)
     dataset_1 = cbind(apply(Z1.skat,1,sum),c(rep(1,ss/2),rep(0,ss/2)))
     dataset_1 = data.frame(dataset_1)
+    
+    
     
     result.mix = rbind(result.mix,c(kk,BFmixture(dataset_0,nsites),BFmixture(dataset_1,nsites)))
     causal.pool = 1:nsites

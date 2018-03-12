@@ -91,6 +91,13 @@ BFbeta = function(obs.data)  {
     
   #return(c(KK,eta_total,eta_case,eta_control,logm_total$value,logm_case$value,logm_control$value,exp(I_case+I_control-I_total)))
     # return(c(logm_case$value-I_total_1,logm_control$value-I_total_0))
-    return(c(KK,exp(I_case+I_control-I_total)))
+    
+    
+    vec = c(KK,exp(I_case+I_control-I_total))
+    
+    names(vec) = c("KK","BF")
+    return(vec)
+    
+    
     
 }
