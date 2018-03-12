@@ -1,5 +1,8 @@
 
 
+library(rareBF)
+
+set.seed(101)
 
 nsites = 500
 
@@ -10,8 +13,8 @@ maf = 0.005
 
 model1 = function(i) {
     
-    p1 = rbinom( ncontrol  , 500 , maf   )
-    p2 = rbinom( ncase     , 500 , maf )  + round(rexp(ncase,rexp_param))
+    p1 = rbinom( ncontrol  , nsites , maf   )
+    p2 = rbinom( ncase     , nsites , maf )  + round(rexp(ncase,rexp_param))
     
     disease_status = c (  rep(0,ncontrol),rep(1,ncase)  )
     data = data.frame(c(p1,p2), disease_status)
