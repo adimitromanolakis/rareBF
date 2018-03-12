@@ -3,7 +3,7 @@
 
 R package for Bayesian Models for Rare Variant Association Analysis.
 
-#### Author: Laurent Briollais, Jingxiong Xu 
+#### Author: Jingxiong Xu, Laurent Briollais 
 #### Maintainer: Apostolos Dimitromanolakis
 
 ## Installation
