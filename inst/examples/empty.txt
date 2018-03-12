@@ -1,0 +1,37 @@
+Jingxiong Xu
+Παρ, 2 Μαρ, 2:35 μ.μ. (Πριν από 7 ημέρες)
+προς εγώ 
+
+
+Fun_reg_..: BF with beta prior, KK precision parameter of beta distribution
+
+Fun_mix : BF with mixture prior, w0.fix, probability of p=0, k.fix precision Precision parameter of beta distribution
+
+
+
+
+From: Apostolos Dimitromanolakis <dimitromanolakis@gmail.com>
+Sent: Friday, March 2, 2018 2:27:00 PM
+To: Jingxiong Xu
+Subject: Re: Add an example to rareBF on Github
+
+
+Jingxiong Xu
+Παρ, 2 Μαρ, 2:47 μ.μ. (Πριν από 7 ημέρες)
+προς εγώ 
+
+
+
+Fun_reg_MLE_K_03Jan2018_marg_lik: 
+what the function does: calculate BF with beta prior, 
+argument: "Data" N*2 data matrix, N is the sample size, 1st column is sum of rare variants for each individual, 2nd column is the disease status
+return: 1st: precision parameter of beta distribution; 2nd: BF
+
+Fun_mix_EM_15Jan2018_marg_lik:
+calculate BF with mixture prior, 
+argument: 
+1st:N*2 data matrix, N is the sample size, 1st column is sum of rare variants for each individual, 2nd column is the disease status
+2nd: number of sites of the region
+return:
+1st, probability of p=0; 2nd, precision parameter of beta distribution,3rd: BF
+

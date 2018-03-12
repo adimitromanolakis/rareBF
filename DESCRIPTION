@@ -1,8 +1,8 @@
 Package: rareBF
 Type: Package
 Title: Bayesian Models for Rare Variant Association Analysis
-Version: 1.06
-Date: 2016-11-01
+Version: 2.0
+Date: 2018-03-09
 Author: Laurent Briollais, Jingxiong Xu 
 Maintainer: Apostolos Dimitromanolakis <apostol@cs.toronto.edu>
 Description: Bayes factor models for rare variant analysis.
@@ -11,8 +11,10 @@ Depends:
     R (>= 2.15.2),
     stats,
     LearnBayes
+Imports: stats, LearnBayes
 Encoding: latin1
 NeedsCompilation: no
-RoxygenNote: 5.0.1
-Suggests: knitr
+RoxygenNote: 6.0.1
+Suggests: knitr, sim1000G
 VignetteBuilder: knitr
+
