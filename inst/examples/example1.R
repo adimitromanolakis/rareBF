@@ -10,11 +10,13 @@ ncase = 200
 ncontrol = 200
 
 maf = 0.005
+rexp_param = 2
+
 
 model1 = function(i) {
     
     p1 = rbinom( ncontrol  , nsites , maf   )
-    p2 = rbinom( ncase     , nsites , maf )  + round(rexp(ncase,rexp_param))
+    p2 = rbinom( ncase     , nsites , maf )  + H1 * round(rexp(ncase,rexp_param))
     
     disease_status = c (  rep(0,ncontrol),rep(1,ncase)  )
     data = data.frame(c(p1,p2), disease_status)
@@ -23,13 +25,12 @@ model1 = function(i) {
     bf
 }
 
-rexp_param = 100000
-
 nrep = 20
 
+H1 = 0
 bf1 = ( replicate(nrep,model1() ) )
-rexp_param = 2
 
+H1 = 1
 bf2 = ( replicate(nrep,model1() ) )
 
 col = c( rep("blue",nrep) , rep("red", nrep))
