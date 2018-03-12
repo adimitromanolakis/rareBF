@@ -80,6 +80,6 @@ plot(log(c(bf1,bf2)),col = col ,pch=20,cex=1.5)
 ```
 
 
-A more involved example can be found at the inst/example directory or at github:
+A more detailed example can be found at the inst/example directory (filename Simulation_example.R) or at github:
 
 [https://github.com/adimitromanolakis/rareBF/tree/master/inst/examples]
