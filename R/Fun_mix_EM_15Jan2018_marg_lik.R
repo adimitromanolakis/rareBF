@@ -13,7 +13,7 @@
 #' 
 #' @examples 
 #' 
-#' nsites = 500
+#'nsites = 500
 #'ncase = 200
 #'ncontrol = 200
 #'maf = 0.005
