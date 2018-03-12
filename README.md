@@ -15,13 +15,13 @@ install.packages("LearnBayes")
 devtools::install_github("adimitromanolakis/rareBF")
 ```
 
-If that fails, you can try downloading the package source from: [https://github.com/adimitromanolakis/rareBF/files/1803537/rareBF_2.0.tar.gz](https://github.com/adimitromanolakis/rareBF/files/1803537/rareBF_2.0.tar.gz) and installing manually:
+If that fails, you can try downloading the package source from: 
+[https://github.com/adimitromanolakis/rareBF/files/1803650/rareBF_2.0.tar.gz](https://github.com/adimitromanolakis/rareBF/files/1803650/rareBF_2.0.tar.gz)
+and installing manually:
 
 ```R
 install.packages("rareBF_2.0.tar.gz")
 ```
-
-
 
 On MACOS or Windows, you can download the [zip file](https://github.com/adimitromanolakis/rareBF/archive/v2.0.zip) and install it.
 
