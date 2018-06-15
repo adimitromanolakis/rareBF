@@ -46,7 +46,7 @@
 #' 
 #' @export
 #' 
-BFmixture = function(obs.data, nvariants, low.bound = 10^(-2) ) {
+BFmixture = function(obs.data, nvariants, low.bound = 10^(-2) ,unify=0) {
   # 
   converge.ind = 0 # if converge.ind is equal to 1, meaning EM estimate for w0, eta and k doesn't converge
   obs.data1 = obs.data[1:sum(obs.data[,2]),]
@@ -239,11 +239,17 @@ BFmixture = function(obs.data, nvariants, low.bound = 10^(-2) ) {
     # return(c(w0.fix,est_total,est_case,est_control,loglike_obs(N,x,m,est_total[1]),loglike_obs(N1,x1,m1,est_case[1]),loglike_obs(N2,x2,m2,est_control[1]),exp(I_case+I_control-I_total)))
     #return(c(w0.fix,k.fix,est_total[1],est_case[1],est_control[1],loglike_obs(N,x,m,est_total[1]),loglike_obs(N1,x1,m1,est_case[1]),loglike_obs(N2,x2,m2,est_control[1]),exp(I_case+I_control-I_total)))
     
-    vec = c(w0.fix,k.fix,exp(I_case+I_control-I_total))
-    
-    names(vec) = c("prob.p.eq.0", "precision","BF")
-    
-    return( vec )
+    if(unify==0){
+      vec = c(w0.fix,k.fix,exp(I_case+I_control-I_total))
+      names(vec) = c("prob.p.eq.0", "precision","BF")
+      
+      return( vec )
+    }else{
+      vec = c(w0.fix,k.fix,exp(I_case+I_control-I_total),loglike_obs(N,x,m,est_total[1]),loglike_obs(N1,x1,m1,est_case[1])+loglike_obs(N2,x2,m2,est_control[1]))
+      names(vec) = c("prob.p.eq.0", "precision","BF","loglik0","loglik1")
+      
+      return( vec )
+    }
     
   }
   
