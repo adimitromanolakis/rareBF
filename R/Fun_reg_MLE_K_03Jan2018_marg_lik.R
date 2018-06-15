@@ -9,7 +9,7 @@
 #' @export
 #' 
 # rename function to BFbeta
-BFbeta = function(obs.data)  {
+BFbeta = function(obs.data,unify=0)  {
   
   
   
@@ -93,10 +93,28 @@ BFbeta = function(obs.data)  {
     # return(c(logm_case$value-I_total_1,logm_control$value-I_total_0))
     
     
-    vec = c(KK,exp(I_case+I_control-I_total))
-    
-    names(vec) = c("KK","BF")
-    return(vec)
+    if(unify==0){
+      vec = c(KK,exp(I_case+I_control-I_total))
+      
+      names(vec) = c("KK","BF")
+      return(vec)
+    }else{
+      x1 = obs.data[1:sum(obs.data[,2]),1]
+      x2 = obs.data[(sum(obs.data[,2])+1):nrow(obs.data),1]
+      c1=0
+      c2=0
+      for(bb in 1:length(x1)){
+        c1 = c1 + lchoose(length(causal.pool),x1[bb])
+      }
+      for(cc in 1:length(x2)){
+        c2 = c2 + lchoose(length(causal.pool),x2[cc])
+      }
+      
+      vec = c(KK,exp(I_case+I_control-I_total),c1+c2+logm_total$value,c1+c2+logm_case$value+logm_control$value)
+      
+      names(vec) = c("KK","BF","loglik0","loglik1")
+      return(vec)
+    }
     
     
     
