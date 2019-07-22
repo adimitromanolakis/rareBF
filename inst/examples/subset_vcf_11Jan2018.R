@@ -1,4 +1,5 @@
-subset_vcf = function(seed_number)  {
+# function to extract regions from VCF file for data simulation
+subset_vcf=function(seed_number){
   # 
   # # plot(vcf$maf)
   # quantile(vcf$maf)
@@ -31,7 +32,10 @@ subset_vcf = function(seed_number)  {
   set.seed(seed_number)
   var_select = sample(1:num_variants,nvariants)
   vcf2 = subsetVCF(vcf, var_select)
-  
+  # 
+  # str(as.list(vcf2))
+  # dim(vcf$gt1)
+  # dim(vcf2$gt1)
   return(vcf2)
 }
 
